@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import TodoList from './components/TodoList';
-import AddTodoPage from './components/AddTodoPage';
+import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import TodoList from "./components/TodoList";
+import AddTodoPage from "./components/AddTodoPage";
 
 const App = () => {
-    const [tasks, setTasks] = useState([]);
+    // ✅ Load tasks from `localStorage` on initial render
+    const [tasks, setTasks] = useState(() => {
+        const savedTasks = localStorage.getItem("tasks");
+        return savedTasks ? JSON.parse(savedTasks) : [];
+    });
 
+    // ✅ Save tasks to `localStorage` whenever updated
     useEffect(() => {
-        const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        setTasks(savedTasks);
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem("tasks", JSON.stringify(tasks));
     }, [tasks]);
 
     return (
